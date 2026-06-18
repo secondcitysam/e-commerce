@@ -62,56 +62,37 @@ public class SecurityConfig {
             throws Exception {
 
         http
+                .authenticationProvider(authenticationProvider())
+
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth ->
                         auth
-
                                 .requestMatchers(
                                         "/login",
                                         "/register",
                                         "/perform-login",
-
                                         "/auth/**",
-
                                         "/css/**",
                                         "/js/**",
                                         "/images/**"
                                 )
-
                                 .permitAll()
-
                                 .anyRequest()
-
                                 .authenticated()
                 )
 
                 .formLogin(form -> form
-
                         .loginPage("/login")
-
                         .loginProcessingUrl("/perform-login")
-
-                        .defaultSuccessUrl(
-                                "/products-ui",
-                                true
-                        )
-
-                        .failureUrl(
-                                "/login?error=true"
-                        )
-
+                        .defaultSuccessUrl("/products-ui", true)
+                        .failureUrl("/login?error=true")
                         .permitAll()
                 )
 
                 .logout(logout -> logout
-
                         .logoutUrl("/logout")
-
-                        .logoutSuccessUrl(
-                                "/login?logout=true"
-                        )
-
+                        .logoutSuccessUrl("/login?logout=true")
                         .permitAll()
                 );
 
