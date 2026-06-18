@@ -12,42 +12,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 @Configuration
 public class SecurityConfig {
 
-    private final CustomUserDetailsService
-            customUserDetailsService;
-
-    private final BCryptPasswordEncoder
-            passwordEncoder;
-
-    private final JwtAuthenticationFilter
-            jwtAuthenticationFilter;
-    public SecurityConfig(
-            CustomUserDetailsService customUserDetailsService,
-            BCryptPasswordEncoder passwordEncoder, JwtAuthenticationFilter jwtAuthenticationFilter) {
-
-        this.customUserDetailsService =
-                customUserDetailsService;
-
-        this.passwordEncoder =
-                passwordEncoder;
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-    }
-
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-
-        DaoAuthenticationProvider provider =
-                new DaoAuthenticationProvider(
-                        customUserDetailsService);
-
-        provider.setPasswordEncoder(
-                passwordEncoder);
-
-        return provider;
-    }
     @Bean
     public AuthenticationManager
     authenticationManager(
@@ -58,16 +25,16 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http)
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http)
             throws Exception {
 
         http
-                .authenticationProvider(authenticationProvider())
-
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth ->
                         auth
+
                                 .requestMatchers(
                                         "/login",
                                         "/register",
@@ -77,22 +44,38 @@ public class SecurityConfig {
                                         "/js/**",
                                         "/images/**"
                                 )
+
                                 .permitAll()
+
                                 .anyRequest()
+
                                 .authenticated()
                 )
 
                 .formLogin(form -> form
+
                         .loginPage("/login")
-                        .loginProcessingUrl("/perform-login")
-                        .defaultSuccessUrl("/products-ui", true)
-                        .failureUrl("/login?error=true")
+
+                        .loginProcessingUrl(
+                                "/perform-login")
+
+                        .defaultSuccessUrl(
+                                "/products-ui",
+                                true)
+
+                        .failureUrl(
+                                "/login?error=true")
+
                         .permitAll()
                 )
 
                 .logout(logout -> logout
+
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout=true")
+
+                        .logoutSuccessUrl(
+                                "/login?logout=true")
+
                         .permitAll()
                 );
 
