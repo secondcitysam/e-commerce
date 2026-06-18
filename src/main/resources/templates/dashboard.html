@@ -1,0 +1,62 @@
+<section class="page">
+
+    <div class="container">
+
+        <h1
+                style="margin-bottom:20px;">
+
+            Analytics Dashboard
+
+        </h1>
+
+        <div
+                style="
+                display:grid;
+                grid-template-columns:
+                repeat(auto-fit,minmax(250px,1fr));
+                gap:20px;">
+
+            <div class="card">
+
+                <h3>Total Products</h3>
+
+                <h1
+                        th:text="${totalProducts}">
+
+                    0
+
+                </h1>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Total Inventory</h3>
+
+                <h1
+                        th:text="${totalInventory}">
+
+                    0
+
+                </h1>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Average Price</h3>
+
+                <h1
+                        th:text="${averagePrice}">
+
+                    0
+
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

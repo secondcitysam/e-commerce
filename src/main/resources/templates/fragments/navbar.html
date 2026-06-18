@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<nav
+        class="navbar"
+        th:fragment="navbar">
+
+    <div
+            class="container navbar-content">
+
+        <a
+                th:href="@{/products-ui}"
+                class="logo">
+
+            Ecommerce
+
+        </a>
+
+        <div class="nav-links">
+
+            <a
+                    th:href="@{/products-ui}">
+
+                Products
+
+            </a>
+
+            <a
+                    th:href="@{/products/create}">
+
+                Add Product
+
+            </a>
+
+
+
+            <form
+                    th:action="@{/logout}"
+                    method="post">
+
+                <button
+                        type="submit"
+                        class="btn btn-sm">
+
+                    Logout
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</nav>
+
+</body>
+
+</html>

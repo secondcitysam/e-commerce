@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head('Products')}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}">
+</div>
+
+<section class="page">
+
+    <div class="container">
+
+        <div class="page-header">
+
+            <h1>
+                Products
+            </h1>
+
+            <div style="display:flex; gap:10px;">
+
+                <a
+                        th:href="@{/products-ui/sort}"
+                        class="btn">
+
+                    Sort By Price
+
+                </a>
+
+                <a
+                        th:href="@{/products/create}"
+                        class="btn">
+
+                    Add Product
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <form
+                class="search-bar"
+                th:action="@{/products-ui/search}"
+                method="get">
+
+            <input
+                    type="text"
+                    name="keyword"
+                    th:value="${keyword}"
+                    class="form-control"
+                    placeholder="Search products...">
+
+            <button
+                    type="submit"
+                    class="btn">
+
+                Search
+
+            </button>
+
+        </form>
+
+        <div
+                th:if="${#lists.isEmpty(products)}"
+                class="card">
+
+            No products available.
+
+        </div>
+
+        <div
+                th:unless="${#lists.isEmpty(products)}"
+                class="card">
+
+            <table class="table">
+
+                <thead>
+
+                <tr>
+
+                    <th>Name</th>
+
+                    <th>Price</th>
+
+                    <th>Quantity</th>
+
+                    <th>Description</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <tr
+                        th:each="product : ${products}">
+
+                    <td
+                            th:text="${product.productName}">
+                    </td>
+
+                    <td
+                            th:text="${product.price}">
+                    </td>
+
+                    <td
+                            th:text="${product.quantity}">
+                    </td>
+
+                    <td
+                            th:text="${product.description}">
+                    </td>
+
+                    <td>
+
+                        <a
+                                th:href="@{/products/edit/{id}(id=${product.productId})}"
+                                class="btn btn-sm">
+
+                            Edit
+
+                        </a>
+
+                        <a
+                                th:href="@{/products/delete/{id}(id=${product.productId})}"
+                                class="btn btn-danger btn-sm"
+
+                                onclick="return confirm('Delete this product?')">
+
+                            Delete
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+<div th:replace="~{fragments/footer :: footer}">
+</div>
+
+</body>
+
+</html>
