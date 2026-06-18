@@ -24,6 +24,9 @@ public class CustomUserDetailsService
             String email)
             throws UsernameNotFoundException {
 
+        System.out.println(
+                "LOGIN ATTEMPT: " + email);
+
         User user = userRepository
                 .findByEmail(email)
                 .orElseThrow(() ->
@@ -32,4 +35,5 @@ public class CustomUserDetailsService
 
         return new CustomUserDetails(user);
     }
+
 }
